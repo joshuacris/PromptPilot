@@ -4,6 +4,7 @@ function IndexPopup() {
   const [data, setData] = useState("");
   const [refinedPrompt, setRefinedPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData(e.target.value);
@@ -38,15 +39,21 @@ function IndexPopup() {
     }
 };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(refinedPrompt).then(()=> {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <div
       style={{ padding: 16}}>
       <h2>
-        Welcome to your{" "}
+        Welcome to {" "}
         <a href="https://www.plasmo.com" target="_blank">
-          Plasmo
+          PromptPilot!
         </a>{" "}
-        Extension!
       </h2>
       <input value ={data} onChange={handleChange} />
 
@@ -60,25 +67,29 @@ function IndexPopup() {
 
       <h2> Your refined prompt: </h2>
 
-            {/* This is the empty box to display the output */}
             <div
         style={{
           width: "90%",
-          height: "100px", // Adjust height to your preference
+          height: "100px",
           border: "1px solid #ccc",
           padding: "10px",
           marginTop: "10px",
           backgroundColor: "#f9f9f9",
-          whiteSpace: "pre-wrap", // Preserve formatting of output text
-          overflowY: "auto", // Allow scrolling if the content overflows
+          whiteSpace: "pre-wrap",
+          overflowY: "auto", 
         }}
       >
-        {refinedPrompt || "Your refined prompt will appear here..."} {/* Display output or placeholder */}
+        {refinedPrompt || "Your refined prompt will appear here..."}
       </div>
 
-      <br />
-      <br />
+      {refinedPrompt && (
+        <>
+        <br />
+        <button onClick={handleCopy}>{copied ? "Copied!" : "Copy to clipboard"} </button>
+        </>
+      )}
 
+      <br />
 
       <a href="https://docs.plasmo.com" target="_blank">
         View Docs

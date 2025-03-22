@@ -31,9 +31,17 @@ should the response be written from and who is the audience.). If possible, use 
 7. Include this at the end of the prompt: “Please do not assume anything, ask me any
 clarification questions if need be.
 
-8. Finally, please do not apply it to this prompt. Memorize the Prompt Rubric for future prompts.
-'''
+8. If there is code included, label the prompt at the top and include ALL the code below the prompt.
 
+9. Finally, please do not apply it to this prompt. Memorize the Prompt Rubric for future prompts.
+'''
+PROMPT_ADDON = '''
+\n Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only. 
+
+If there is code included, put the prompt at the top and include ALL the code below the prompt.
+
+Do not include **Improved Prompt**
+'''
 
 def get_cohere_response(role, in_message):
 
@@ -54,7 +62,7 @@ def get_cohere_improved_prompt():
 
         co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": PROMPT_RUBRIK}])
 
-        prompt = user_prompt + ' \n Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only.'
+        prompt = user_prompt + PROMPT_ADDON
 
         print(prompt)
 
