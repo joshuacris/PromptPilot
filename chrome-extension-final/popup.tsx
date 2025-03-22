@@ -8,6 +8,9 @@ function IndexPopup() {
   }
 
   const handleSave = () => {
+
+    console.log("Sending message to background script")
+
     chrome.runtime.sendMessage({type: "input-change", value: data}, (response) => {
       console.log("Message sent to background script")
     })
