@@ -46,17 +46,23 @@ def get_cohere_response(role, in_message):
 def get_cohere_improved_prompt():
     try:
 
-        print("\nWorks!\n")
-
         content = request.json
 
-        user_prompt = content["received"]["text"]
+        user_prompt = content["input"]
+
+        print(user_prompt)
 
         co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": PROMPT_RUBRIK}])
 
-        prompt = user_prompt + 'Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only.'
+        prompt = user_prompt + ' \n Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only.'
+
+        print(prompt)
 
         response = co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": prompt}])
+
+        filtered_reponse = response.message.content[0].text
+
+        print(response)
 
         return jsonify({'status': 'success', 'improved_prompt': response}), 201
     except Exception as e:
