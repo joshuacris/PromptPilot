@@ -9,7 +9,7 @@ load_dotenv()
 CO_API_KEY = os.environ.get("CO_API_KEY")# get this from https://dashboard.cohere.com/
 
 app = Flask(__name__)
-#CORS(app)  # Enable CORS to allow requests from your React app
+CORS(app) 
 co = cohere.ClientV2(CO_API_KEY)
 PROMPT_RUBRIK = '''
 
@@ -44,20 +44,23 @@ def get_cohere_response(role, in_message):
 
 @app.route('/improve_prompt', methods=['POST'])
 def get_cohere_improved_prompt():
+    try:
 
-    print("\nWorks!\n")
+        print("\nWorks!\n")
 
-    content = request.json
+        content = request.json
 
-    user_prompt = content["received"]["text"]
+        user_prompt = content["received"]["text"]
 
-    co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": PROMPT_RUBRIK}])
+        co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": PROMPT_RUBRIK}])
 
-    prompt = user_prompt + 'Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only.'
+        prompt = user_prompt + 'Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only.'
 
-    response = co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": prompt}])
+        response = co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": prompt}])
 
-    return jsonify({'status': 'success', 'improved_prompt': response}), 201
+        return jsonify({'status': 'success', 'improved_prompt': response}), 201
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 400
 
 
 if __name__ == "__main__":
