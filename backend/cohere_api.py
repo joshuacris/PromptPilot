@@ -62,9 +62,7 @@ def get_cohere_improved_prompt():
 
         filtered_reponse = response.message.content[0].text
 
-        print(response)
-
-        return jsonify({'status': 'success', 'improved_prompt': response}), 201
+        return jsonify({'status': 'success', 'improved_prompt': filtered_reponse}), 201
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 400
 

@@ -25,9 +25,9 @@ function IndexPopup() {
       });
 
       const result = await response.json();
-
+      
       if (response.ok) {
-        setRefinedPrompt(result.refinedPrompt);
+        setRefinedPrompt(result.improved_prompt);
       } else {
         setRefinedPrompt(`Error: ${result.error}`);
       }
