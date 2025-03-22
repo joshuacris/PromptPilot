@@ -1,20 +1,23 @@
 import { useState } from "react"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
+  const [data, setData] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData(e.target.value)
+    setData(e.target.value);
   }
 
   const handleSave = () => {
 
-    console.log("Sending message to background script")
+    console.log("Sending message to background script");
 
-    chrome.runtime.sendMessage({type: "input-change", value: data}, (response) => {
-      console.log("Message sent to background script")
-    })
-  }
+    chrome.runtime.sendMessage(
+      { type: "input-change", value: data}, 
+      (response) => {
+        console.log("Message sent to background script");
+    }
+  );
+};
 
   return (
     <div
