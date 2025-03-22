@@ -54,14 +54,15 @@ const HeroSection = () => {
           </div>
           
           <h1 className="hero-text mb-6 text-balance">
-            Master the Art of <br className="hidden sm:block" />
-            Prompt Engineering
+            Improve Your Prompts <br className="hidden sm:block" />
+            To Get Better Results
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
             Craft perfect prompts that get precise, consistent results every time. Unlock the full potential of AI with expert-level prompt engineering.
           </p>
           
+          {/*}
           <div className="bg-accent/50 backdrop-blur-sm rounded-lg p-4 mb-8 border border-accent-foreground/5 shadow-sm">
             <p className="font-mono text-sm md:text-base text-primary/90">
               <span className="text-blue-500">&gt;</span> "I need you to 
@@ -69,7 +70,7 @@ const HeroSection = () => {
                 generate a detailed business strategy
               </span>"
             </p>
-          </div>
+          </div>*/}
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="w-full sm:w-auto group">

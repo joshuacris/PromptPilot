@@ -30,7 +30,7 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <a href="#" className="text-xl font-bold tracking-tight">
-          PromptMaster
+          PromptPilot
         </a>
 
         {/* Desktop Navigation */}
