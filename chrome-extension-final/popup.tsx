@@ -2,6 +2,7 @@ import { useState } from "react"
 
 function IndexPopup() {
   const [data, setData] = useState("");
+  const [promptType, setPromptType] = useState("EVERYDAY");
   const [refinedPrompt, setRefinedPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -10,34 +11,47 @@ function IndexPopup() {
     setData(e.target.value);
   }
 
-  const handleSave = async () => {
+  const handleSaveInput = async () => {
 
-    console.log("Sending message to background script");
+      console.log("Sending message to background script");
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    try {
-      const response = await fetch("http://127.0.0.1:5000/improve_prompt", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ input: data }),
-      });
+      try {
+        const response = await fetch("http://127.0.0.1:5000/improve_prompt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ input: data , option: promptType}),
+        });
 
-      const result = await response.json();
-      
-      if (response.ok) {
-        setRefinedPrompt(result.improved_prompt);
-      } else {
-        setRefinedPrompt(`Error: ${result.error}`);
+        const result = await response.json();
+        
+        if (response.ok) {
+          setRefinedPrompt(result.improved_prompt);
+        } else {
+          setRefinedPrompt(`Error: ${result.error}`);
+        }
+      } catch (error) {
+        setRefinedPrompt("Error: No connection to backend");
+      } finally {
+        setIsLoading(false)
       }
-    } catch (error) {
-      setRefinedPrompt("Error: No connection to backend");
-    } finally {
-      setIsLoading(false)
-    }
-};
+  };
+
+  const handleSaveEducational = async () => {
+    setPromptType("EDUCATIONAL");
+
+  }
+
+  const handleSaveProblemSolving = async () => {
+    setPromptType("PROBLEM_SOLVING");
+  }
+
+  const handleSaveEveryday = async () => {
+    setPromptType("EVERYDAY");
+  }
 
   const handleCopy = () => {
     navigator.clipboard.writeText(refinedPrompt).then(()=> {
@@ -65,7 +79,7 @@ function IndexPopup() {
       
       <div style={{ display: "flex", justifyContent: "center" }}>
       <button
-      onClick={handleSave}
+      onClick={handleSaveInput}
       style={{
       backgroundColor: "#007BFF",
       color: "#fff",
@@ -82,6 +96,21 @@ function IndexPopup() {
       {isLoading ? "Saving..." : "Save Input"}
       </button>
       </div>
+
+      <br />
+      <br />
+
+      <button onClick={handleSaveEducational}> {"Educational"} </button>
+      
+      <br />
+      <br />
+      
+      <button onClick={handleSaveProblemSolving}> {"Problem Solving"} </button>
+      
+      <br />
+      <br />
+
+      <button onClick={handleSaveEveryday}> {"Everyday"} </button>
       
       <br />
       <br />
