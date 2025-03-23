@@ -14,17 +14,17 @@ co = cohere.ClientV2(CO_API_KEY)
 
 def engineer_context(prompt_type: str) -> str:
     if prompt_type == 'EDUCATIONAL':
-        return '''You are to memorize the following Context Rubric for future prompts only.
+        return '''\nAdditionally, you are to memorize the following Context Rubric for future prompts only.
         Context Rubric:
         1. If the prompt asks for a direct answer, implement guide rails in the prompt to prevent a direct answer.
         2. Ensure the prompt will activate chain-of-thought prompting when obtaining a response.'''
     elif prompt_type == 'PROBLEM_SOLVING':
-        return '''You are to memorize the following Context Rubric for future prompts only.
+        return '''\nAdditionally, You are to memorize the following Context Rubric for future prompts only.
         Context Rubric:
         1. If the prompt asks for a direct answer or multiple choice, use zero-shot prompting in the prompt
         2. If the prompt asks to solve a complicated problem, use meta prompting in the prompt'''
     else: # prompt_type == EVERYDAY
-        return '''You are to memorize the following Context Rubric for future prompts only.
+        return '''\nAdditionally, You are to memorize the following Context Rubric for future prompts only.
         Context Rubric:
         1. Ensure the prompt will activate few-shot prompting when obtaining a response
         2. Make the prompt elicit a concise response without overcomplicating it.'''
@@ -41,36 +41,23 @@ def get_cohere_response(role, in_message):
 def get_cohere_improved_prompt():
     try:
         PROMPT_RUBRIK = '''
-
         Given a prompt, can you please improve it so that it follows the Prompt Rubric:
-
         1. First, break the prompt into sequential steps: Eg. First [do something], then [do something]. Finally, [do something].
-
         2. Then, provide necessary context or background information. Eg. Report card. Which report card? For elementary students in Brazil?
-
         3. Afterwards, assign a role to the AI model. Eg. Imagine you are a teacher and I am a student. Please explain Newton’s Law.
-
         4. After this, specify the tone (Please use constructive tone, related to roles: whose perspective
         should the response be written from and who is the audience.). If possible, use action words to be more specific.
-
         5. If there are no examples, add an example when applicable.
-
         6. Explicitly say format of the response expected (bullet points, tables, code, etc).
-
         7. Include this at the end of the prompt: “Please do not assume anything, ask me any
         clarification questions if need be.
-
         8. If there is code included, label the prompt at the top and include ALL the code below the prompt.
-
         9. Finally, please do not apply it to this prompt. Memorize the Prompt Rubric for future prompts.
         '''
 
         PROMPT_ADDON = '''
-        \n Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only. 
-
-        If there is code included, put the prompt at the top and include ALL the code below the prompt.
-
-        Do not include **Improved Prompt**
+        \n Improve and REWORD this prompt using the Prompt Rubric and Context Rubric, with the response being a string of the new prompt only.
+        Do NOT answer the question.
         '''
 
         content = request.json
@@ -82,10 +69,10 @@ def get_cohere_improved_prompt():
         print(user_option)
         print("\n")
 
-        PROMPT_TYPE = engineer_context(user_option)
+        PROMPT_RUBRIK = PROMPT_RUBRIK + engineer_context(user_option)
         USER_PROMPT_FINAL = user_prompt + PROMPT_ADDON
 
-        pipeline = [PROMPT_RUBRIK, PROMPT_TYPE, USER_PROMPT_FINAL]
+        pipeline = [PROMPT_RUBRIK, USER_PROMPT_FINAL]
 
         for step in pipeline:
             response = co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": step}])
