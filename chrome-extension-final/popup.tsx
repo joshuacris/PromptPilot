@@ -63,57 +63,97 @@ function IndexPopup() {
   return (
     <div
       style={{ 
-      
       right: 50,
-      height: "100%",
+      width: "400px",
+      height: "500px",
+      borderRadius: "15px",
       padding: 30,
       background: "linear-gradient(135deg,rgb(81, 125, 190) 0%,rgb(136, 52, 192) 100%)" // Changed to gradient
       }}>
       <h2 style={{ display: "block", textAlign: "center", color: "#fff" }}> 
       Welcome to PromptPilot!{" "}
-      </h2>
-      <input placeholder="Type your prompt here..."  style={{ display: "block", textAlign: "center" }} value ={data} onChange={handleChange} />
+      </h2 >
+      <input  placeholder="Type your prompt here..."  style={{ display: "block", textAlign: "center" }} value ={data} onChange={handleChange} />
 
       <br />
       <br />
       
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
+      {/* Top button - centered */}
       <button
-      onClick={handleSaveInput}
-      style={{
-      backgroundColor: "#007BFF",
-      color: "#fff",
-      fontWeight: "bold",
-      border: "none",
-      padding: "10px 20px",
-      borderRadius: "5px",
-      cursor: "pointer",
-      transition: "background-color 0.3s ease",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
-      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
+        onClick={handleSaveInput}
+        style={{
+          backgroundColor: "#007BFF",
+          color: "#fff",
+          fontWeight: "bold",
+          border: "none",
+          padding: "10px 20px",
+          borderRadius: "5px",
+          cursor: "pointer",
+          transition: "background-color 0.3s ease",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
       >
-      {isLoading ? "Saving..." : "Save Input"}
+        {isLoading ? "Saving..." : "Save Input"}
       </button>
+
+      {/* Row of three buttons */}
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button
+          onClick={handleSaveEducational}
+          style={{
+            backgroundColor: "#007BFF",
+            color: "#fff",
+            fontWeight: "bold",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
+        >
+          {"Educational"}
+        </button>
+        <button
+          onClick={handleSaveProblemSolving}
+          style={{
+            backgroundColor: "#007BFF",
+            color: "#fff",
+            fontWeight: "bold",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
+        >
+          {"Problem Solving"}
+        </button>
+        <button
+          onClick={handleSaveEveryday}
+          style={{
+            backgroundColor: "#007BFF",
+            color: "#fff",
+            fontWeight: "bold",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
+        >
+          {"Everyday"}
+        </button>
       </div>
+    </div>
 
-      <br />
-      <br />
-
-      <button onClick={handleSaveEducational}> {"Educational"} </button>
-      
-      <br />
-      <br />
-      
-      <button onClick={handleSaveProblemSolving}> {"Problem Solving"} </button>
-      
-      <br />
-      <br />
-
-      <button onClick={handleSaveEveryday}> {"Everyday"} </button>
-      
-      <br />
-      <br />
 
       <h2 style={{ display: "block", textAlign: "center", color: "#fff" }}> Your refined prompt: </h2>
 

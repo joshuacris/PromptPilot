@@ -12,6 +12,23 @@ app = Flask(__name__)
 CORS(app) 
 co = cohere.ClientV2(CO_API_KEY)
 
+def engineer_context(prompt_type: str) -> str:
+    if prompt_type == 'EDUCATIONAL':
+        return '''You are to memorize the following Context Rubric for future prompts only.
+        Context Rubric:
+        1. If the prompt asks for a direct answer, implement guide rails in the prompt to prevent a direct answer.
+        2. Ensure the prompt will activate chain-of-thought prompting when obtaining a response.'''
+    elif prompt_type == 'PROBLEM-SOLVING':
+        return '''You are to memorize the following Context Rubric for future prompts only.
+        Context Rubric:
+        1. If the prompt asks for a direct answer or multiple choice, use zero-shot prompting in the prompt
+        2. If the prompt asks to solve a complicated problem, use meta prompting in the prompt'''
+    else: # prompt_type == EVERYDAY
+        return '''You are to memorize the following Context Rubric for future prompts only.
+        Context Rubric:
+        1. Ensure the prompt will activate few-shot prompting when obtaining a response
+        2. Make the prompt elicit a concise response without overcomplicating it.'''
+
 
 def get_cohere_response(role, in_message):
 
@@ -59,22 +76,15 @@ def get_cohere_improved_prompt():
         content = request.json
 
         user_prompt = content["input"]
-        user_option = content["option"]
+        user_prompt = content["option"]
 
-        if user_option == "EDUCATIONAL":
-           PROMPT_RUBRIK = ''' '''
+        PROMPT_TYPE = engineer_context('PROBLEM-SOLVING')
+        USER_PROMPT_FINAL = user_prompt + PROMPT_ADDON
 
-        elif user_option == "PROBLEM_SOLVING":
-            PROMPT_RUBRIK = ''' '''
+        pipeline = [PROMPT_RUBRIK, PROMPT_TYPE, USER_PROMPT_FINAL]
 
-        else:
-            pass
-
-        co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": PROMPT_RUBRIK}])
-
-        prompt = user_prompt + ' \n Improve this prompt using the Prompt Rubric, with the response being a string of the new prompt only.'
-
-        response = co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": prompt}])
+        for step in pipeline:
+            response = co.chat(model="command-a-03-2025", messages=[{"role": "user", "content": step}])
 
         filtered_reponse = response.message.content[0].text
 
