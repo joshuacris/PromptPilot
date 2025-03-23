@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
@@ -33,28 +31,18 @@ const Navbar = () => {
           PromptPilot
         </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Desktop Navigation - Right Aligned */}
+        <nav className="hidden md:flex items-center space-x-8 ml-auto">
           <a href="#features" className="text-sm font-medium hover:text-primary/80 transition-colors">
             Features
           </a>
           <a href="#process" className="text-sm font-medium hover:text-primary/80 transition-colors">
             Process
           </a>
-          <a href="#testimonials" className="text-sm font-medium hover:text-primary/80 transition-colors">
+          <a href="#testimonials" className="text-sm font-medium hover:text-primary/80 transition-colors mr-4">
             Results
           </a>
-          <a href="#pricing" className="text-sm font-medium hover:text-primary/80 transition-colors">
-            Pricing
-          </a>
         </nav>
-
-        <div className="hidden md:flex items-center space-x-4">
-          <Button variant="outline" size="sm">
-            Sign In
-          </Button>
-          <Button size="sm">Get Started</Button>
-        </div>
 
         {/* Mobile Menu Button */}
         <button 
@@ -90,21 +78,6 @@ const Navbar = () => {
             >
               Results
             </a>
-            <a 
-              href="#pricing" 
-              className="text-sm font-medium py-2 hover:text-primary/80 transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Pricing
-            </a>
-            <div className="flex flex-col space-y-2 pt-2 border-t border-border/30">
-              <Button variant="outline" className="w-full justify-center">
-                Sign In
-              </Button>
-              <Button className="w-full justify-center">
-                Get Started
-              </Button>
-            </div>
           </div>
         </div>
       )}
