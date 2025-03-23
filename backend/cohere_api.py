@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-CO_API_KEY = "iV47bx7aPOKOfHF9LZzN7ie5HFvwRSxMOt8OwJTK" # get this from https://dashboard.cohere.com/
+CO_API_KEY = os.environ.get("CO_API_KEY")# get this from https://dashboard.cohere.com/
 
 app = Flask(__name__)
 CORS(app) 
@@ -18,7 +18,7 @@ def engineer_context(prompt_type: str) -> str:
         Context Rubric:
         1. If the prompt asks for a direct answer, implement guide rails in the prompt to prevent a direct answer.
         2. Ensure the prompt will activate chain-of-thought prompting when obtaining a response.'''
-    elif prompt_type == 'PROBLEM-SOLVING':
+    elif prompt_type == 'PROBLEM_SOLVING':
         return '''You are to memorize the following Context Rubric for future prompts only.
         Context Rubric:
         1. If the prompt asks for a direct answer or multiple choice, use zero-shot prompting in the prompt
@@ -76,9 +76,13 @@ def get_cohere_improved_prompt():
         content = request.json
 
         user_prompt = content["input"]
-        user_prompt = content["option"]
+        user_option = content["option"]
 
-        PROMPT_TYPE = engineer_context('PROBLEM-SOLVING')
+        print("\n")
+        print(user_option)
+        print("\n")
+
+        PROMPT_TYPE = engineer_context(user_option)
         USER_PROMPT_FINAL = user_prompt + PROMPT_ADDON
 
         pipeline = [PROMPT_RUBRIK, PROMPT_TYPE, USER_PROMPT_FINAL]
