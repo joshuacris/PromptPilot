@@ -72,8 +72,22 @@ function IndexPopup() {
       }}>
       <h2 style={{ display: "block", textAlign: "center", color: "#fff" }}> 
       Welcome to PromptPilot!{" "}
-      </h2 >
-      <input  placeholder="Type your prompt here..."  style={{ display: "block", textAlign: "center" }} value ={data} onChange={handleChange} />
+      </h2>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <input
+          placeholder="Type your prompt here..."
+          style={{
+        display: "block",
+        width: "90%",
+        padding: "10px",
+        textAlign: "center",
+        borderRadius: "5px",
+        border: "1px solid #ccc"
+          }}
+          value={data}
+          onChange={handleChange}
+        />
+      </div>
 
       <br />
       <br />
@@ -103,56 +117,50 @@ function IndexPopup() {
         <button
           onClick={handleSaveEducational}
           style={{
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            fontWeight: "bold",
-            border: "none",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
+        backgroundColor: promptType === "EDUCATIONAL" ? "#0056b3" : "#007BFF",
+        color: "#fff",
+        fontWeight: "bold",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "5px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
         >
           {"Educational"}
         </button>
         <button
           onClick={handleSaveProblemSolving}
           style={{
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            fontWeight: "bold",
-            border: "none",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
+        backgroundColor: promptType === "PROBLEM_SOLVING" ? "#0056b3" : "#007BFF",
+        color: "#fff",
+        fontWeight: "bold",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "5px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
         >
           {"Problem Solving"}
         </button>
         <button
           onClick={handleSaveEveryday}
           style={{
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            fontWeight: "bold",
-            border: "none",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
+        backgroundColor: promptType === "EVERYDAY" ? "#0056b3" : "#007BFF",
+        color: "#fff",
+        fontWeight: "bold",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "5px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
         >
           {"Everyday"}
         </button>
       </div>
-    </div>
+        </div>
 
 
       <h2 style={{ display: "block", textAlign: "center", color: "#fff" }}> Your refined prompt: </h2>
@@ -169,13 +177,31 @@ function IndexPopup() {
       overflowY: "auto", 
       }}
       >
-      {refinedPrompt || "Your refined prompt will appear here..."}
+      <div style={{ textAlign: "center" }}>
+        {refinedPrompt || "Your refined prompt will appear here..."}
+      </div>
       </div>
 
       {refinedPrompt && (
       <>
       <br />
-      <button onClick={handleCopy}>{copied ? "Copied!" : "Copy to clipboard"} </button>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <button 
+          style={{ 
+        backgroundColor: "#007BFF",
+        color: "#fff",
+        fontWeight: "bold",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "5px",
+        cursor: "pointer",
+        width: "50%" 
+          }} 
+          onClick={handleCopy}
+        >
+          {copied ? "Copied!" : "Copy to clipboard"}
+        </button>
+      </div>
       </>
       )}
 
