@@ -207,8 +207,8 @@ function IndexPopup() {
 
       <br />
 
-      <a style={{ display: "block", textAlign: "center", color: "#fff" }} href="https://docs.plasmo.com" target="_blank">
-      View Docs
+      <a style={{ display: "block", textAlign: "center", color: "#fff" }} href="https://github.com/joshuacris/PromptPilot" target="_blank">
+      View Repository
       </a>
     </div>
   )
