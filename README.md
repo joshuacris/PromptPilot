@@ -1,2 +1,3 @@
-# PromptEngineer
-GenAI Genesis
+# PromptPilot
+Install requirements with pip install -r requirements.txt
+

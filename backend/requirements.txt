@@ -1,2 +1,4 @@
 cohere
 dotenv
+flask
+flask_cors
